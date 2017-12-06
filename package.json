@@ -30,11 +30,15 @@
     "@types/glob": "5.0.*",
     "@types/grunt": "0.4.*",
     "@types/node": "^8.0.54",
+    "@types/yargs": "^8.0.2",
     "codecov.io": "0.1.6",
     "typescript": "~2.6.2"
   },
   "dependencies": {
     "chalk": "^2.3.0",
-    "cli-spinner": "^0.2.7"
+    "cli-spinner": "^0.2.7",
+    "execa": "^0.8.0",
+    "parse-git-config": "^1.1.1",
+    "yargs": "^10.0.3"
   }
 }

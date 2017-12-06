@@ -44,6 +44,13 @@ sources.forEach(sourceDir => {
 	});
 });
 
+// copy package.json
+const packageJson = JSON.parse(fs.readFileSync('package.json').toString());
+['private', 'scripts', 'files'].forEach(k => delete packageJson[k]);
+
+fs.writeFileSync(path.join(destDirFullPath, 'package.json'), JSON.stringify(packageJson, undefined, 4));
+
+
 function remapMjsSourceMap(contents: string): string {
 	return contents.replace(/(\/\/.*sourceMappingURL=.*?)(\.js\.map)/g, '$1.mjs.map');
 }
