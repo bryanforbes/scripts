@@ -1,6 +1,6 @@
+import chalk from 'chalk';
 import * as fs from 'fs';
 import { runAsPromise } from './utils/process';
-import chalk from 'chalk';
 
 const yargs = require('yargs');
 
@@ -21,14 +21,20 @@ const {
 	})
 	.argv;
 
-async function command(bin: string, args: string[], executeOnDryRun = false) {
+async function command(bin: string, args: string[], options: any = {}, executeOnDryRun = false) {
 	if (dryRun && !executeOnDryRun) {
-		console.log(chalk.gray(`${bin} ${args.join(' ')}`));
+		if (options.cwd) {
+			console.log(chalk.gray(`(from ${options.cwd}) ${bin} ${args.join(' ')}`));
+		}
+		else {
+			console.log(chalk.gray(`${bin} ${args.join(' ')}`));
+		}
 		return Promise.resolve('');
 	}
 
 	console.log(chalk.green(`${bin} ${args.join(' ')}...`));
-	return runAsPromise(bin, args);
+
+	return runAsPromise(bin, args, options);
 }
 
 (async function () {
@@ -37,7 +43,7 @@ async function command(bin: string, args: string[], executeOnDryRun = false) {
 	console.log(chalk.yellow(`Dry Run: ${dryRun}`));
 
 	// run the release command
-	await command('npm', ['version', releaseVersion], false);
+	await command('npm', ['version', releaseVersion], { cwd: 'dist/all' }, false);
 
 	// run the post release command
 	const packageJson = JSON.parse(fs.readFileSync('package.json').toString());

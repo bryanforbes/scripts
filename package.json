@@ -22,7 +22,8 @@
     "url": "https://github.com/dojo/scripts.git"
   },
   "scripts": {
-    "build": "tsc -p . && cp -R src/*.json _build/src/"
+    "build": "tsc -p . && copyfiles \"src/*.json\" dist/cjs",
+    "package": "node dist/cjs/src/package.js"
   },
   "devDependencies": {
     "@dojo/loader": "beta1",
@@ -32,6 +33,7 @@
     "@types/node": "^8.0.54",
     "@types/yargs": "^8.0.2",
     "codecov.io": "0.1.6",
+    "copyfiles": "^1.2.0",
     "typescript": "~2.6.2"
   },
   "dependencies": {
