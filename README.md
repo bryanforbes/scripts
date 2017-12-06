@@ -1,52 +1,72 @@
-# dojo-<< package-name >>
+# dojo-scripts
 
-<!-- TODO: change and uncomment
-[![Build Status](https://travis-ci.org/dojo/<< package-name >>.svg?branch=master)](https://travis-ci.org/dojo/<< package-name >>)
-[![codecov](https://codecov.io/gh/dojo/<< package-name >>/branch/master/graph/badge.svg)](https://codecov.io/gh/dojo/<< package-name >>)
-[![npm version](https://badge.fury.io/js/dojo-<< package-name >>.svg)](http://badge.fury.io/js/dojo-<< package-name >>)
--->
 
-TODO: Replace with a description of this package
+[![Build Status](https://travis-ci.org/dojo/scripts.svg?branch=master)](https://travis-ci.org/dojo/scripts )
+[![npm version](https://badge.fury.io/js/dojo-scripts.svg)](http://badge.fury.io/js/dojo-scripts)
+
+A package of scripts to aid with Dojo 2 package development.
 
 ## Features
 
-TODO: Add sections on features of this package
+### Packaging
+
+The provided `package.js` script will take all of the directories in the `dist` directory and merge the `src` subdirecotires together into a combined `dist/all` folder. A modified `package.json` will also be copied into `dist/all/package.json`.
+
+Once in this format, you can easily create a `.tar.gz` of your package with `npm pack dist/all`.
+
+### Releasing
+
+Several scripts are provided to ease the release process.
+
+#### Can Publish Checks
+
+To check if the user is allowed to publish, run the `can-publish-check.js` script. The script will fail with a `1` exit code if the user cannot publish.
+
+#### Clean Repo Checks
+
+A safe release is a clean release. To check if there are no uncommitted changes, and the user is `master`, run the `repo-is-clean-check.js` script. The script will fail with a `1` exit code if the repo is dirty.
+
+#### Release
+
+The `release.js` script can release a dojo package. The `dist/all` directory is what gets released. The script takes a number of arguments:
+
+| Parameter  | Description                              |
+| ---------- | ---------------------------------------- |
+| `—version` | The version to release                   |
+| `—next`    | The next version (`package.json` version gets set to this) |
+| `—dry-run` | Shows the commands that will be run but does not run the commands. |
 
 ## How do I use this package?
 
-TODO: Add appropriate usage and instruction guidelines
+Add this package as a dependency and reference the provided scripts from npm scripts.
+
+For example,
+
+```json
+{
+    "scripts": {
+    "prepublish": "node node_modules/@dojo/scripts/install-peer-deps.js",
+    "lint": "tslint \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "test": "npm run build:umd && intern",
+    "test:local": "intern config=intern.json@local",
+    "test:browserstack": "intern config=intern.json@browserstack",
+    "test:saucelabs": "intern config=intern.json@saucelabs",
+    "build:static": "copyfiles \"tests/**/*.html\" \"src/**/*.d.ts\"",
+    "build:umd": "tsc -p . && npm run build:static -- dist/umd",
+    "build:esm": "tsc -p ./node_modules/@dojo/scripts/tsconfig.esm.json && npm run build:static -- dist/esm",
+    "clean": "rimraf dist",
+    "dist": "npm run lint && npm run clean && npm run build:umd && npm run build:esm && npm run package",
+    "package": "node node_modules/@dojo/scripts/package.js",
+    "release": "node node_modules/@dojo/scripts/can-publish-check.js && node node_modules/@dojo/scripts/repo-is-clean-check.js && npm run dist && npm run package && node node_modules/@dojo/scripts/release.js"
+  },
+}
+```
 
 ## How do I contribute?
 
 We appreciate your interest!  Please see the [Dojo 2 Meta Repository](https://github.com/dojo/meta#readme) for the
 Contributing Guidelines and Style Guide.
 
-## Testing
-
-Test cases MUST be written using [Intern](https://theintern.github.io) using the Object test interface and Assert assertion interface.
-
-90% branch coverage MUST be provided for all code submitted to this repository, as reported by istanbul’s combined coverage results for all supported platforms.
-
-To test locally in node run:
-
-`grunt test`
-
-To test against browsers with a local selenium server run:
-
-`grunt test:local`
-
-To test against BrowserStack or Sauce Labs run:
-
-`grunt test:browserstack`
-
-or
-
-`grunt test:saucelabs`
-
 ## Licensing information
 
-TODO: If third-party code was used to write this library, make a list of project names and licenses here
-
-* [Third-party lib one](https//github.com/foo/bar) ([New BSD](http://opensource.org/licenses/BSD-3-Clause))
-
-© [JS Foundation](https://js.foundation/) & contributors. [New BSD](http://opensource.org/licenses/BSD-3-Clause) and [Apache 2.0](https://opensource.org/licenses/Apache-2.0) licenses.
+© 2017 [JS Foundation](https://js.foundation/). [New BSD](http://opensource.org/licenses/BSD-3-Clause) license.
