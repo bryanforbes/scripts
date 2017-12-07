@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import * as fs from 'fs';
+import { EOL } from 'os';
 import { runAsPromise } from './utils/process';
 
 const yargs = require('yargs');
@@ -38,9 +39,14 @@ async function command(bin: string, args: string[], options: any = {}, executeOn
 }
 
 (async function () {
+	const hasDojoRemote = (await command('git', ['remote'], {}, true))
+		.split(EOL)
+		.filter((remote: string) => remote.trim() === 'dojo').length === 1;
+
 	console.log(chalk.yellow(`Version: ${releaseVersion}`));
 	console.log(chalk.yellow(`Next Version: ${nextVersion}`));
 	console.log(chalk.yellow(`Dry Run: ${dryRun}`));
+	console.log(chalk.yellow(`Push Back: ${hasDojoRemote}`));
 
 	// run the release command
 	await command('npm', ['version', releaseVersion], { cwd: 'dist/all' }, false);
@@ -60,6 +66,9 @@ async function command(bin: string, args: string[], options: any = {}, executeOn
 	}
 
 	await command('git', ['commit', '-am', `"Update package metadata"`], false);
-	await command('git', ['push', 'dojo', 'master'], false);
-	await command('git', ['push', 'dojo', '--tags'], false);
+
+	if (hasDojoRemote) {
+		await command('git', ['push', 'dojo', 'master'], false);
+		await command('git', ['push', 'dojo', '--tags'], false);
+	}
 })();
