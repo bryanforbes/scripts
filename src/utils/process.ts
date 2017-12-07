@@ -2,7 +2,10 @@ import * as childProcess from 'child_process';
 
 export async function runAsPromise(command: string, args: string[], options: any = {}): Promise<any> {
 	return new Promise((resolve, reject) => {
-		const process = childProcess.spawn(command, args, options);
+		const process = childProcess.spawn(command, args, {
+			shell: true,
+			...options
+		});
 		let stdout = '';
 		let stderr = '';
 
