@@ -5,7 +5,7 @@ import { runAsPromise } from './utils/process';
 const yargs = require('yargs');
 
 const {
-	'version': releaseVersion,
+	'release': releaseVersion,
 	'next': nextVersion,
 	'dry-run': dryRun
 } = yargs
