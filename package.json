@@ -1,5 +1,5 @@
 {
-  "name": "dojo-scripts",
+  "name": "@dojo/scripts",
   "version": "2.0.0-pre",
   "description": "Scripts for developing Dojo2 packages",
   "engines": {
@@ -22,8 +22,16 @@
     "url": "https://github.com/dojo/scripts.git"
   },
   "scripts": {
-    "build": "tsc -p . && copyfiles \"src/*.json\" dist/cjs",
+    "clean": "rimraf dist",
+    "build": "tsc -p . && copyfiles \"src/*.json\" dist/cjs && copyfiles \"src/bin/*\" dist/cjs",
     "package": "node dist/cjs/src/package.js"
+  },
+  "bin": {
+    "dojo-can-publish-check": "./bin/dojo-can-publish-check",
+    "dojo-repo-is-clean-check": "./bin/dojo-repo-is-clean-check",
+    "dojo-install-peer-deps": "./bin/dojo-install-peer-deps",
+    "dojo-package": "./bin/dojo-package",
+    "dojo-release": "./bin/dojo-release"
   },
   "devDependencies": {
     "@dojo/loader": "beta1",
@@ -34,6 +42,7 @@
     "@types/yargs": "^8.0.2",
     "codecov.io": "0.1.6",
     "copyfiles": "^1.2.0",
+    "rimraf": "^2.6.2",
     "typescript": "~2.6.2"
   },
   "dependencies": {
