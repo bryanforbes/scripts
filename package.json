@@ -23,7 +23,7 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "tsc -p . && copyfiles \"src/*.json\" dist/cjs && copyfiles \"src/bin/*\" dist/cjs",
+    "build": "tsc -p . && copyfiles \"src/tsconfig/*.json\" dist/cjs && copyfiles \"src/bin/*\" dist/cjs",
     "package": "node dist/cjs/src/package.js"
   },
   "bin": {
