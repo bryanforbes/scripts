@@ -23,7 +23,7 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "tsc -p . && copyfiles \"src/tsconfig/*.json\" dist/cjs && copyfiles \"src/bin/*\" dist/cjs",
+    "build": "tsc && copyfiles \"src/**/*.json\" dist/cjs && copyfiles \"src/bin/*\" dist/cjs",
     "package": "node dist/cjs/src/package.js"
   },
   "bin": {
@@ -34,22 +34,17 @@
     "dojo-release": "./bin/dojo-release"
   },
   "devDependencies": {
-    "@dojo/loader": "beta1",
-    "@types/chalk": "^2.2.0",
-    "@types/glob": "5.0.*",
-    "@types/grunt": "0.4.*",
-    "@types/node": "^8.0.54",
+    "@types/node": "^6.0.54",
     "@types/yargs": "^8.0.2",
     "codecov.io": "0.1.6",
     "copyfiles": "^1.2.0",
     "rimraf": "^2.6.2",
+    "tslint": "~5.8.0",
+    "intern": "~4.1.4",
     "typescript": "~2.6.2"
   },
   "dependencies": {
     "chalk": "^2.3.0",
-    "cli-spinner": "^0.2.7",
-    "execa": "^0.8.0",
-    "parse-git-config": "^1.1.1",
     "yargs": "^10.0.3"
   }
 }
