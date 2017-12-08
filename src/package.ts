@@ -4,7 +4,7 @@ import { ContentTransform, copy, glob, parseWithFullExtension } from './utils/fi
 
 const destDirectories = [
 	{
-		dest: 'all',
+		dest: 'testing',
 		flat: false,
 		packageJson: false
 	}, {
