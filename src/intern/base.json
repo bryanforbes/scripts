@@ -9,11 +9,11 @@
 	],
 
 	"suites": [
-		"./dist/all/tests/unit/all.js"
+		"./dist/testing/tests/unit/all.js"
 	],
 
 	"functionalSuites": [
-		"./dist/all/tests/functional/all.js"
+		"./dist/testing/tests/functional/all.js"
 	],
 
 	"browser": {
@@ -43,7 +43,7 @@
 	},
 
 	"coverage": [
-		"./dist/all/src/**/*.js"
+		"./dist/testing/src/**/*.js"
 	],
 
 	"configs": {
