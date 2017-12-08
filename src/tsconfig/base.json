@@ -13,6 +13,12 @@
 			"es2015.symbol",
 			"es2015.symbol.wellknown"
 		],
+		"plugins": [
+			{
+				"name": "tslint-language-service",
+				"alwaysShowRuleFailuresAsWarnings": true
+			}
+		],
 		"moduleResolution": "node",
 		"removeComments": false,
 		"sourceMap": true,

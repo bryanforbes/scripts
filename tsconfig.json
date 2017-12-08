@@ -4,8 +4,8 @@
 		"declaration": false,
 		"downlevelIteration": false,
 		"importHelpers": false,
-		"outDir": "dist/cjs",
-		"types": [ "node" ]
+		"outDir": "dist/testing",
+		"types": [ "node", "intern" ]
 	},
 	"include": [
 		"./src/**/*.ts",

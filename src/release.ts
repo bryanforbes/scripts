@@ -2,8 +2,7 @@ import chalk from 'chalk';
 import * as fs from 'fs';
 import { EOL } from 'os';
 import { runAsPromise } from './utils/process';
-
-const yargs = require('yargs');
+import * as yargs from 'yargs';
 
 const {
 	'release': releaseVersion,
@@ -20,7 +19,12 @@ const {
 		type: 'boolean',
 		default: false
 	})
-	.argv;
+	.demandOption([ 'release' ])
+	.argv as (yargs.Arguments & {
+		release: string;
+		next?: string;
+		'dry-run': boolean;
+	});
 
 async function command(bin: string, args: string[], options: any = {}, executeOnDryRun = false) {
 	if (dryRun && !executeOnDryRun) {
@@ -44,7 +48,7 @@ async function command(bin: string, args: string[], options: any = {}, executeOn
 		.filter((remote: string) => remote.trim() === 'dojo').length === 1;
 
 	console.log(chalk.yellow(`Version: ${releaseVersion}`));
-	console.log(chalk.yellow(`Next Version: ${nextVersion}`));
+	console.log(chalk.yellow(`Next Version: ${nextVersion || 'none'}`));
 	console.log(chalk.yellow(`Dry Run: ${dryRun}`));
 	console.log(chalk.yellow(`Push Back: ${hasDojoRemote}`));
 
@@ -59,10 +63,10 @@ async function command(bin: string, args: string[], options: any = {}, executeOn
 	}
 
 	if (dryRun) {
-		console.log(chalk.gray(`would be setting package.json version to ${nextVersion}...`));
+		console.log(chalk.gray(`would be setting package.json version to ${packageJson.version}...`));
 	}
 	else {
-		fs.writeFileSync('package.json', nextVersion);
+		fs.writeFileSync('package.json', JSON.stringify(packageJson, null, '  '));
 	}
 
 	await command('git', ['commit', '-am', `"Update package metadata"`], false);

@@ -1,5 +1,4 @@
 declare const shimAmdDependencies: any;
-declare const intern: any;
 
 intern.registerLoader(async (options: any) => {
 	await intern.loadScript('node_modules/@dojo/loader/loader.js');
