@@ -9,22 +9,15 @@
 	],
 
 	"suites": [
-		"./dist/umd/tests/unit/all.js"
+		"./dist/all/tests/unit/all.js"
 	],
 
 	"functionalSuites": [
-		"./dist/umd/tests/functional/all.js"
-	],
-
-	"plugins": [
-		"./dist/umd/tests/plugins/echo-service.js"
+		"./dist/all/tests/functional/all.js"
 	],
 
 	"browser": {
-		"loader": "./node_modules/@dojo/scripts/intern/loader.js",
-		"suites+": [
-			"./dist/umd/tests/unit/all-browser.js"
-		]
+		"loader": "./node_modules/@dojo/scripts/intern/loader.js"
 	},
 
 	"node": {
@@ -46,15 +39,11 @@
 					"directory": "html-report"
 				}
 			}
-		],
-
-		"suites+": [
-			"./dist/umd/tests/unit/all-node.js"
 		]
 	},
 
 	"coverage": [
-		"./dist/umd/src/**/*.js"
+		"./dist/all/src/**/*.js"
 	],
 
 	"configs": {

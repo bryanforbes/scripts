@@ -49,7 +49,7 @@ async function command(bin: string, args: string[], options: any = {}, executeOn
 	console.log(chalk.yellow(`Push Back: ${hasDojoRemote}`));
 
 	// run the release command
-	await command('npm', ['version', releaseVersion], { cwd: 'dist/all' }, false);
+	await command('npm', ['version', releaseVersion], { cwd: 'dist/release' }, false);
 
 	// run the post release command
 	const packageJson = JSON.parse(fs.readFileSync('package.json').toString());
